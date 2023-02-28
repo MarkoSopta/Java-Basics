@@ -6,20 +6,21 @@ public class NumberGuessingGame {
         Random random = new Random();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Guess the number (1-100): ");
-        int guess = scanner.nextInt();
+        int guess =0;
         int numToGuess = random.nextInt(100)+1;
+        int tries=0;
 
         while (guess != numToGuess) {
+            guess = scanner.nextInt();
+            tries++;
             if (guess > numToGuess) {
                 System.out.println("Lower!");
-                guess = scanner.nextInt();
             }
             if (guess < numToGuess) {
                 System.out.println("Higher!");
-                guess = scanner.nextInt();
             }
         }
-        System.out.println("Correct!");
+        System.out.println("Correct! You guessed it in "+ tries +" tries!");
         scanner.close();
     }
 }
