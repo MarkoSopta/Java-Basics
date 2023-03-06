@@ -1,11 +1,14 @@
 package com.marko.productservice.service;
 
 import com.marko.productservice.DTO.ProductRequest;
+import com.marko.productservice.DTO.ProductResponse;
 import com.marko.productservice.model.Product;
 import com.marko.productservice.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,20 @@ public class ProductService {
         productRepository.save(product);
 
         log.info("Product {} saved",product.getId());
+    }
+
+    public List<ProductResponse> getAllProducts() {
+       List<Product> products = productRepository.findAll();
+       return products.stream().map(this::mapToProductResponse).toList();
+    }
+
+    private ProductResponse mapToProductResponse(Product product) {
+        return ProductResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .price(product.getPrice())
+                .build();
     }
 }
 
